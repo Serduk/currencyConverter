@@ -18,4 +18,4 @@ samples, guidance on mobile development, and a full API reference.
 
 - [Layouts in Flutter](https://flutter.dev/docs/development/ui/layout)
 - [Medium Flutter layouts](https://medium.com/flutter-community/flutter-layout-cheat-sheet-5363348d037e)
-- [Exchanger API] (https://exchangeratesapi.io)
+- [Exchanger API](https://exchangeratesapi.io)
