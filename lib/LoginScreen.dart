@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'CurrencyBoard.dart';
+import 'CurrencyBoardScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -32,7 +32,8 @@ class _LoginScreen extends State<LoginScreen> {
                     ),
                     keyboardType: TextInputType.emailAddress,
                     validator: (email) {
-                      if (!email.contains('@')) {
+//                      if (!email.contains('@')) {
+                      if (email.toLowerCase() != 'serhii') {
                         return 'Please, Enter valid email';
                       }
                     },
