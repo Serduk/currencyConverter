@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+/// Good tutorial for example:
+/// https://pusher.com/tutorials/flutter-listviews
+/// */
+
 class CurrencyBoard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -51,6 +55,23 @@ class CurrencyBoard extends StatelessWidget {
         });
   }
 
+  Widget _currencyItems(BuildContext context) {
+    return ListView.builder(
+        itemCount: _items.length,
+        itemBuilder: (context, index) {
+          return Card(
+            child: ListTile(
+              leading: Icon(Icons.attach_money),
+              title: Text(_items[index]),
+              trailing: Icon(Icons.close),
+              onTap: () {
+                print(_items[index]);
+              },
+            ),
+          );
+        });
+  }
+
   List<DropdownMenuItem<String>> _fetchCurrency() {
     List<DropdownMenuItem<String>> menuItems = List();
 
@@ -71,4 +92,45 @@ class CurrencyBoard extends StatelessWidget {
     '4': 'Bath',
     '5': 'Lirs'
   };
+}
+
+class BodyLayout extends StatefulWidget {
+  @override
+  BodyLayoutState createState() {
+    return new BodyLayoutState();
+  }
+}
+
+class BodyLayoutState extends State<BodyLayout> {
+  List<String> titles = ['one', 'two', 'three', 'four'];
+  final GlobalKey<AnimatedListState> _listKey = GlobalKey();
+
+  @override
+  Widget build(BuildContext context) {
+    return _myListView();
+  }
+
+  Widget _myListView() {
+    return ListView.builder(
+      itemCount: titles.length,
+      itemBuilder: (context, index) {
+        final item = titles[index];
+        return Card(
+          child: ListTile(
+            title: Text(item),
+            onTap: () {
+              setState(() {
+                titles.insert(index, 'INPUTET');
+              });
+            },
+            onLongPress: () {
+              setState(() {
+                titles.removeAt(index);
+              });
+            },
+          ),
+        );
+      },
+    );
+  }
 }
