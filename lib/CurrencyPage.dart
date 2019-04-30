@@ -43,23 +43,29 @@ class _CurrencyPage extends State<CurrenciesPage> {
           title: Text(widget.title),
         ),
         body: SafeArea(
-            child: FutureBuilder<List<CurrencyEntity>>(
-                future: future,
-                builder: (_, snapshot) {
-                  if (snapshot.hasData) {
-                    final curencyes = snapshot.data;
-                    return ListView.builder(
-                      itemCount: curencyes.length,
-                      itemBuilder: (_, i) =>
-                          CurrencyListTile(currency: curencyes[i]),
-                    );
-                  } else if (snapshot.hasError) {
-                    return Text('${snapshot.error}');
-                  }
-                  return Center(
-                    child: const Text('Loading...'),
-                  );
-                })),
+          child: FutureBuilder<List<CurrencyEntity>>(
+            future: future,
+            builder: (_, snapshot) {
+              if (snapshot.hasData) {
+                final currencies = snapshot.data;
+                return ListView.builder(
+                  itemCount: currencies.length,
+                  itemBuilder: (_, i) =>
+                      CurrencyListTile(currency: currencies[i]),
+                );
+              } else if (snapshot.hasError) {
+                return Text('${snapshot.error}');
+              }
+              return Center(
+                child: const Text('Loading...'),
+              );
+            },
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _buildFuture,
+          child: const Icon(Icons.refresh),
+        ),
       );
 }
 
@@ -73,7 +79,7 @@ class CurrencyListTile extends StatelessWidget {
         onTap: () {
           Scaffold.of(context).showSnackBar(
             SnackBar(
-              content: Text('Currenc: ${currency.rateToStandard}'),
+              content: Text('CURRENCY: ${currency.name}'),
             ),
           );
         },
@@ -81,23 +87,23 @@ class CurrencyListTile extends StatelessWidget {
           leading: GestureDetector(
             onTap: () {
               showDialog(
-                  context: context,
-                  builder: (_) => AlertDialog(
-                        content: Image.asset(
-                            'icons/currency/${this.currency.name}.png',
-                            package: 'currency_icons'),
-                      ));
+                context: context,
+                builder: (_) => AlertDialog(
+                      content: Image.asset(
+                          'icons/currency/${this.currency.name}.png',
+                          package: 'currency_icons'),
+                    ),
+              );
             },
             child: CircleAvatar(
               backgroundImage: NetworkImage(
-                'icons/currency/${this.currency.name}.png',
+                '${currency.flag}',
               ),
             ),
           ),
-          title: Text(
-              '${currency.name} ${currency.rateToStandard}, ${currency.date}'),
-          subtitle: Text('DATE: ${currency.date}'),
-          trailing: Text("CURRENCY NAME: ${currency.name}"),
+          title: Text('${currency.name} ${currency.date}'),
+          subtitle: Text(currency.flag),
+          trailing: Text(currency.name),
         ),
       );
 }
