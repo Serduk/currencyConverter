@@ -75,7 +75,7 @@ class _LoginScreen extends State<LoginScreen> {
                             context,
                             MaterialPageRoute(
                                 builder: (BuildContext context) =>
-                                    CurrencyesPage(title: 'Currency')));
+                                    CurrenciesPage(title: 'Currency')));
                       } else {
                         Scaffold.of(context).showSnackBar(SnackBar(
                             content: Text('Oops. Something went wrong :-(')));

@@ -5,16 +5,16 @@ import 'package:http/http.dart' as http;
 import 'package:currency_converter/CurrencyEntity.dart';
 import 'package:currency_converter/AvailableCurrencies.dart';
 
-
-class CurrencyesPage extends StatefulWidget {
-  const CurrencyesPage({@required this.title, Key key}) : super(key: key);
+/// Icons example: https://pub.dartlang.org/packages/currency_icons#-example-tab-
+class CurrenciesPage extends StatefulWidget {
+  const CurrenciesPage({@required this.title, Key key}) : super(key: key);
   final String title;
 
   @override
   _CurrencyPage createState() => _CurrencyPage();
 }
 
-class _CurrencyPage extends State<CurrencyesPage> {
+class _CurrencyPage extends State<CurrenciesPage> {
   Future<List<CurrencyEntity>> future;
 
   String _url = "https://api.exchangeratesapi.io/latest";
@@ -38,29 +38,28 @@ class _CurrencyPage extends State<CurrencyesPage> {
   }
 
   @override
-  Widget build(BuildContext context) =>
-      Scaffold(
+  Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
         ),
-        body: SafeArea(child: FutureBuilder<List<CurrencyEntity>>(
-            future: future,
-            builder: (_, snapshot) {
-              if (snapshot.hasData) {
-                final curencyes = snapshot.data;
-                return ListView.builder(
-                  itemCount: curencyes.length,
-                  itemBuilder: (_, i) =>
-                      CurrencyListTile(currency: curencyes[i]),
-                );
-              } else if (snapshot.hasError) {
-                return Text('${snapshot.error}');
-              }
-              return Center(
-                child: const Text('Loading...'),
-              );
-            }
-        )),
+        body: SafeArea(
+            child: FutureBuilder<List<CurrencyEntity>>(
+                future: future,
+                builder: (_, snapshot) {
+                  if (snapshot.hasData) {
+                    final curencyes = snapshot.data;
+                    return ListView.builder(
+                      itemCount: curencyes.length,
+                      itemBuilder: (_, i) =>
+                          CurrencyListTile(currency: curencyes[i]),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text('${snapshot.error}');
+                  }
+                  return Center(
+                    child: const Text('Loading...'),
+                  );
+                })),
       );
 }
 
@@ -70,11 +69,11 @@ class CurrencyListTile extends StatelessWidget {
   final CurrencyEntity currency;
 
   @override
-  Widget build(BuildContext context) =>
-      InkWell(
+  Widget build(BuildContext context) => InkWell(
         onTap: () {
           Scaffold.of(context).showSnackBar(
-            SnackBar(content: Text('Currenc: ${currency.rateToStandard}'),
+            SnackBar(
+              content: Text('Currenc: ${currency.rateToStandard}'),
             ),
           );
         },
@@ -83,14 +82,16 @@ class CurrencyListTile extends StatelessWidget {
             onTap: () {
               showDialog(
                   context: context,
-                  builder: (_) =>
-                      AlertDialog(
-                        content: Image.network(
-                          currency.flag, fit: BoxFit.cover,),
+                  builder: (_) => AlertDialog(
+                        content: Image.asset(
+                            'icons/currency/${this.currency.name}.png',
+                            package: 'currency_icons'),
                       ));
             },
             child: CircleAvatar(
-              backgroundImage: NetworkImage(currency.flag),
+              backgroundImage: NetworkImage(
+                'icons/currency/${this.currency.name}.png',
+              ),
             ),
           ),
           title: Text(
