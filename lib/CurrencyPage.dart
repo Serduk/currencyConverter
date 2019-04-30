@@ -25,7 +25,7 @@ class _CurrencyPage extends State<CurrenciesPage> {
           .get(_url)
           .then((response) => convert.jsonDecode(response.body))
           .then((json) {
-        final List results = json['rates'];
+        final List results = json['base'];
         return results.map((m) => MyCurrency.fromJson(m)).toList();
       });
     });

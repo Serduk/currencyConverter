@@ -22,6 +22,6 @@ class MyCurrency extends CurrencyEntity {
 
             name: 'NAME',
             date: 'DATE',
-            rateToStandard: json[''],
+            rateToStandard: json['rates']['RUB'],
             flag: 'FLAG');
 }
