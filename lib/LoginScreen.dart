@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'CurrencyBoardScreen.dart';
+import 'package:currency_converter/CurrencyPage.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -75,7 +75,7 @@ class _LoginScreen extends State<LoginScreen> {
                             context,
                             MaterialPageRoute(
                                 builder: (BuildContext context) =>
-                                    BodyLayout()));
+                                    CurrencyesPage(title: 'Currency')));
                       } else {
                         Scaffold.of(context).showSnackBar(SnackBar(
                             content: Text('Oops. Something went wrong :-(')));
