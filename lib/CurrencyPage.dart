@@ -112,3 +112,16 @@ class CurrencyListTile extends StatelessWidget {
         ),
       );
 }
+
+Widget inputForm() {
+  return TextFormField(
+    decoration: InputDecoration(
+      hintText: base.moneyCount,
+      suffixIcon: IconButton(icon: Icon(Icons.monetization_on), onPressed: () {
+//        TODO: Recalculate
+      })
+    ),
+    keyboardType: TextInputType.number,
+    autovalidate: true,
+  );
+}

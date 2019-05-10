@@ -3,6 +3,7 @@ final String END_POINT = "https://api.exchangeratesapi.io/latest";
 
 // strings:
 final String loading = "Loading...";
+final String moneyCount = 'Money count';
 
 // COUNTRIES NAMES:
 final String AUD='AUD';
