@@ -3,7 +3,8 @@ import 'dart:convert' as convert;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:currency_converter/CurrencyEntity.dart';
-import 'package:currency_converter/AvailableCurrencies.dart';
+
+import 'strings.dart' as base;
 
 /// Icons example: https://pub.dartlang.org/packages/currency_icons#-example-tab-
 class CurrenciesPage extends StatefulWidget {
@@ -15,9 +16,8 @@ class CurrenciesPage extends StatefulWidget {
 }
 
 class _CurrencyPage extends State<CurrenciesPage> {
-  Future<List<CurrencyEntity>> future;
-
-  String _url = "https://api.exchangeratesapi.io/latest";
+  Future<CurrencyEntity> future;
+  String _url = base.END_POINT;
 
   void _buildFuture() {
     setState(() {
@@ -25,8 +25,7 @@ class _CurrencyPage extends State<CurrenciesPage> {
           .get(_url)
           .then((response) => convert.jsonDecode(response.body))
           .then((json) {
-        final List results = json['base'];
-        return results.map((m) => MyCurrency.fromJson(m)).toList();
+        return json;
       });
     });
   }
@@ -43,21 +42,26 @@ class _CurrencyPage extends State<CurrenciesPage> {
           title: Text(widget.title),
         ),
         body: SafeArea(
-          child: FutureBuilder<List<CurrencyEntity>>(
+          child: FutureBuilder<CurrencyEntity>(
             future: future,
             builder: (_, snapshot) {
               if (snapshot.hasData) {
-                final currencies = snapshot.data;
+                final _countryCode = snapshot.data.countries.keys.toList();
+                final _countryCurrency =
+                    snapshot.data.countries.values.toList();
+
                 return ListView.builder(
-                  itemCount: currencies.length,
-                  itemBuilder: (_, i) =>
-                      CurrencyListTile(currency: currencies[i]),
+                  itemCount: _countryCode.length,
+                  itemBuilder: (_, i) => CurrencyListTile(
+                        country: _countryCode[i],
+                        currency: _countryCurrency[i],
+                      ),
                 );
               } else if (snapshot.hasError) {
                 return Text('${snapshot.error}');
               }
               return Center(
-                child: const Text('Loading...'),
+                child: Text('${base.loading}'),
               );
             },
           ),
@@ -70,16 +74,18 @@ class _CurrencyPage extends State<CurrenciesPage> {
 }
 
 class CurrencyListTile extends StatelessWidget {
-  const CurrencyListTile({Key key, this.currency}) : super(key: key);
+  const CurrencyListTile({Key key, this.country, this.currency})
+      : super(key: key);
 
-  final CurrencyEntity currency;
+  final String currency;
+  final String country;
 
   @override
   Widget build(BuildContext context) => InkWell(
         onTap: () {
           Scaffold.of(context).showSnackBar(
             SnackBar(
-              content: Text('CURRENCY: ${currency.name}'),
+              content: Text('CURRENCY: $currency'),
             ),
           );
         },
@@ -89,21 +95,20 @@ class CurrencyListTile extends StatelessWidget {
               showDialog(
                 context: context,
                 builder: (_) => AlertDialog(
-                      content: Image.asset(
-                          'icons/currency/${this.currency.name}.png',
+                      content: Image.asset('icons/currency/$currency.png',
                           package: 'currency_icons'),
                     ),
               );
             },
             child: CircleAvatar(
               backgroundImage: NetworkImage(
-                '${currency.flag}',
+                '$country',
               ),
             ),
           ),
-          title: Text('${currency.name} ${currency.date}'),
-          subtitle: Text(currency.flag),
-          trailing: Text(currency.name),
+          title: Text('$country $currency'),
+          subtitle: Text(country),
+          trailing: Text('$currency'),
         ),
       );
 }
