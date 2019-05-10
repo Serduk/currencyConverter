@@ -25,7 +25,7 @@ class _CurrencyPage extends State<CurrenciesPage> {
           .get(_url)
           .then((response) => convert.jsonDecode(response.body))
           .then((json) {
-        return json;
+        return MyCurrency.fromJson(json);
       });
     });
   }
@@ -42,42 +42,55 @@ class _CurrencyPage extends State<CurrenciesPage> {
           title: Text(widget.title),
         ),
         body: SafeArea(
-          child: FutureBuilder<CurrencyEntity>(
-            future: future,
-            builder: (_, snapshot) {
-              if (snapshot.hasData) {
-                final _countryCode = snapshot.data.countries.keys.toList();
-                final _countryCurrency =
-                    snapshot.data.countries.values.toList();
-
-                return ListView.builder(
-                  itemCount: _countryCode.length,
-                  itemBuilder: (_, i) => CurrencyListTile(
-                        country: _countryCode[i],
-                        currency: _countryCurrency[i],
-                      ),
-                );
-              } else if (snapshot.hasError) {
-                return Text('${snapshot.error}');
-              }
-              return Center(
-                child: Text('${base.loading}'),
-              );
-            },
+          child: Container(
+            child: Column(
+              children: <Widget>[
+                inputForm(),
+                futureBuild(),
+              ],
+            ),
           ),
         ),
+        bottomNavigationBar: inputForm(),
         floatingActionButton: FloatingActionButton(
           onPressed: _buildFuture,
           child: const Icon(Icons.refresh),
         ),
       );
+
+  Widget futureBuild() {
+    return Container(
+      child: FutureBuilder<CurrencyEntity>(
+        future: future,
+        builder: (_, snapshot) {
+          if (snapshot.hasData) {
+            final _countryCode = snapshot.data.countries.keys.toList();
+            final _countryCurrency = snapshot.data.countries.values.toList();
+
+            return ListView.builder(
+              itemCount: _countryCode.length,
+              itemBuilder: (_, i) => CurrencyListTile(
+                    country: _countryCode[i],
+                    currency: _countryCurrency[i],
+                  ),
+            );
+          } else if (snapshot.hasError) {
+            return Text('${snapshot.error}');
+          }
+          return Center(
+            child: Text('${base.loading}'),
+          );
+        },
+      ),
+    );
+  }
 }
 
 class CurrencyListTile extends StatelessWidget {
   const CurrencyListTile({Key key, this.country, this.currency})
       : super(key: key);
 
-  final String currency;
+  final double currency;
   final String country;
 
   @override
@@ -114,14 +127,18 @@ class CurrencyListTile extends StatelessWidget {
 }
 
 Widget inputForm() {
-  return TextFormField(
-    decoration: InputDecoration(
-      hintText: base.moneyCount,
-      suffixIcon: IconButton(icon: Icon(Icons.monetization_on), onPressed: () {
+  return Container(
+    padding: EdgeInsets.all(10.0),
+    child: TextFormField(
+      decoration: InputDecoration(
+          hintText: base.moneyCount,
+          suffixIcon: IconButton(
+              icon: Icon(Icons.monetization_on),
+              onPressed: () {
 //        TODO: Recalculate
-      })
+              })),
+      keyboardType: TextInputType.number,
+      autovalidate: true,
     ),
-    keyboardType: TextInputType.number,
-    autovalidate: true,
   );
 }

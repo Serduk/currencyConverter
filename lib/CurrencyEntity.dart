@@ -9,7 +9,7 @@ abstract class CurrencyEntity {
   final String date;
   final String baseRate;
   final String flag;
-  final Map<String, String> countries;
+  final Map<String, double> countries;
 }
 
 class MyCurrency extends CurrencyEntity {
@@ -17,6 +17,6 @@ class MyCurrency extends CurrencyEntity {
       : super._(
             date: json['date'],
             baseRate: json['base'],
-            countries: json['rates']
+            countries: Map.from(json['rates'])
   );
 }
