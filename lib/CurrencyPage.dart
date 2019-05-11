@@ -45,13 +45,19 @@ class _CurrencyPage extends State<CurrenciesPage> {
           child: Container(
             child: Column(
               children: <Widget>[
-                inputForm(),
-                futureBuild(),
+                Flexible(
+                  child: futureBuild(),
+                  flex: 1,
+                ),
+                Flexible(
+                  child: inputForm(),
+                  flex: 0,
+                ),
               ],
             ),
           ),
         ),
-        bottomNavigationBar: inputForm(),
+//        bottomNavigationBar: inputForm(),
         floatingActionButton: FloatingActionButton(
           onPressed: _buildFuture,
           child: const Icon(Icons.refresh),
@@ -115,7 +121,7 @@ class CurrencyListTile extends StatelessWidget {
             },
             child: CircleAvatar(
               backgroundImage: NetworkImage(
-                '$country',
+                'https://restcountries.eu/data/$country.svg',
               ),
             ),
           ),
