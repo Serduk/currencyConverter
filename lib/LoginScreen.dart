@@ -42,7 +42,7 @@ class _LoginScreen extends State<LoginScreen> {
                     },
                   ),
                   TextFormField(
-                    autovalidate: true,
+                    autovalidate: false,
                     obscureText: _obscurePassword,
                     decoration: InputDecoration(
                         labelText: 'Password',

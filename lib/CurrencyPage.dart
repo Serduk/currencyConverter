@@ -17,12 +17,12 @@ class CurrenciesPage extends StatefulWidget {
 
 class _CurrencyPage extends State<CurrenciesPage> {
   Future<CurrencyEntity> future;
-  String _url = base.END_POINT;
+  double _exchange = 0;
 
   void _buildFuture() {
     setState(() {
       future = http
-          .get(_url)
+          .get(base.END_POINT)
           .then((response) => convert.jsonDecode(response.body))
           .then((json) {
         return MyCurrency.fromJson(json);
@@ -78,6 +78,7 @@ class _CurrencyPage extends State<CurrenciesPage> {
               itemBuilder: (_, i) => CurrencyListTile(
                     country: _countryCode[i],
                     currency: _countryCurrency[i],
+                    exchange: _exchange,
                   ),
             );
           } else if (snapshot.hasError) {
@@ -90,13 +91,41 @@ class _CurrencyPage extends State<CurrenciesPage> {
       ),
     );
   }
+
+  Widget inputForm() {
+    return Container(
+      padding: EdgeInsets.all(10.0),
+      child: TextFormField(
+        decoration: InputDecoration(
+            hintText: base.moneyCount,
+            prefixIcon: IconButton(
+              icon: Icon(Icons.euro_symbol),
+              onPressed: () {
+//                TODO: Not implemented yet
+              },
+            ),
+            suffixIcon: IconButton(
+                icon: Icon(Icons.monetization_on),
+                onPressed: () {
+//        TODO: Recalculate
+                })),
+        keyboardType: TextInputType.number,
+        autovalidate: true,
+        validator: (value) {
+          _exchange = double.tryParse(value);
+          futureBuild();
+        },
+      ),
+    );
+  }
 }
 
 class CurrencyListTile extends StatelessWidget {
-  const CurrencyListTile({Key key, this.country, this.currency})
+  const CurrencyListTile({Key key, this.country, this.currency, this.exchange})
       : super(key: key);
 
   final double currency;
+  final double exchange;
   final String country;
 
   @override
@@ -127,24 +156,7 @@ class CurrencyListTile extends StatelessWidget {
           ),
           title: Text('$country $currency'),
           subtitle: Text(country),
-          trailing: Text('$currency'),
+          trailing: Text('${(currency * exchange).toStringAsFixed(2)}'),
         ),
       );
-}
-
-Widget inputForm() {
-  return Container(
-    padding: EdgeInsets.all(10.0),
-    child: TextFormField(
-      decoration: InputDecoration(
-          hintText: base.moneyCount,
-          suffixIcon: IconButton(
-              icon: Icon(Icons.monetization_on),
-              onPressed: () {
-//        TODO: Recalculate
-              })),
-      keyboardType: TextInputType.number,
-      autovalidate: true,
-    ),
-  );
 }
