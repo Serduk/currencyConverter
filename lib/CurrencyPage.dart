@@ -1,8 +1,9 @@
 import 'dart:convert' as convert;
 
+import 'package:currency_converter/entity/Country.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:currency_converter/CurrencyEntity.dart';
+import 'package:currency_converter/entity/Currency.dart';
 
 import 'strings.dart' as base;
 
@@ -17,15 +18,23 @@ class CurrenciesPage extends StatefulWidget {
 
 class _CurrencyPage extends State<CurrenciesPage> {
   Future<CurrencyEntity> future;
+  Future<Country> fCountries;
   double _exchange;
 
   void _buildFuture() {
     setState(() {
       future = http
-          .get(base.END_POINT)
+          .get(base.epCurrencyExchanger)
           .then((response) => convert.jsonDecode(response.body))
           .then((json) {
         return MyCurrency.fromJson(json);
+      });
+
+      fCountries = http
+          .get(base.epCountries)
+          .then((response) => convert.jsonDecode(response.body))
+          .then((json) {
+        return MyCountry.fromJson(json);
       });
     });
   }
@@ -73,7 +82,7 @@ class _CurrencyPage extends State<CurrenciesPage> {
             final _countryCode = snapshot.data.countries.keys.toList();
             final _countryCurrency = snapshot.data.countries.values.toList();
 
-            if(_exchange == null) _exchange = 1.0;
+            if (_exchange == null) _exchange = 1.0;
             return ListView.builder(
               itemCount: _countryCode.length,
               itemBuilder: (_, i) => CurrencyListTile(
