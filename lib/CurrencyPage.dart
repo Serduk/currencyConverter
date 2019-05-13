@@ -17,7 +17,7 @@ class CurrenciesPage extends StatefulWidget {
 
 class _CurrencyPage extends State<CurrenciesPage> {
   Future<CurrencyEntity> future;
-  double _exchange = 0;
+  double _exchange;
 
   void _buildFuture() {
     setState(() {
@@ -73,6 +73,7 @@ class _CurrencyPage extends State<CurrenciesPage> {
             final _countryCode = snapshot.data.countries.keys.toList();
             final _countryCurrency = snapshot.data.countries.values.toList();
 
+            if(_exchange == null) _exchange = 1.0;
             return ListView.builder(
               itemCount: _countryCode.length,
               itemBuilder: (_, i) => CurrencyListTile(
@@ -113,6 +114,7 @@ class _CurrencyPage extends State<CurrenciesPage> {
         autovalidate: true,
         validator: (value) {
           _exchange = double.tryParse(value);
+          if (value == null) return;
           futureBuild();
         },
       ),
