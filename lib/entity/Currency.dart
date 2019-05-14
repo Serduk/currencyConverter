@@ -1,3 +1,6 @@
+
+/// Exchanger API
+/// https://exchangeratesapi.io
 abstract class CurrencyEntity {
   CurrencyEntity._({
     this.date,
