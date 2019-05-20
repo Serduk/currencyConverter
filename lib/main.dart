@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'LoginScreen.dart';
+//import 'package:currency_converter/login_screen/LoginScreen.dart';
+import 'package:currency_converter/login_screen/login_view.dart';
 
 void main() => runApp(MyApp());
 

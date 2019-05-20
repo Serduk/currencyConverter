@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:currency_converter/entity/Currency.dart';
 
-import 'strings.dart' as base;
+import 'package:currency_converter/strings.dart' as base;
 
 /// Icons example: https://pub.dartlang.org/packages/currency_icons#-example-tab-
 class CurrenciesPage extends StatefulWidget {

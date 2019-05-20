@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:currency_converter/CurrencyPage.dart';
+import 'package:currency_converter/currency_screen/CurrencyPage.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
