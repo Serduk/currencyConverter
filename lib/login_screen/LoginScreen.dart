@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:currency_converter/currency_screen/CurrencyPage.dart';
 
+@deprecated
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreen createState() => _LoginScreen();
