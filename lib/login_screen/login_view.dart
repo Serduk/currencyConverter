@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:currency_converter/login_screen/login_model.dart';
 import 'package:currency_converter/login_screen/login_presenter.dart';
 import 'package:flutter/material.dart';
 import 'package:currency_converter/currency_screen/CurrencyPage.dart';
+import 'package:flutter/animation.dart';
 
 class LoginScreen extends StatefulWidget {
   final presenter = LoginPresenter(LoginModel());
@@ -10,20 +13,38 @@ class LoginScreen extends StatefulWidget {
   _LoginScreen createState() => _LoginScreen();
 }
 
-class _LoginScreen extends State<LoginScreen> implements LoginView {
+class _LoginScreen extends State<LoginScreen>
+    with SingleTickerProviderStateMixin
+    implements LoginView {
   bool _obscurePassword = true;
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  Animation<double> animation;
+  AnimationController controller;
+
   @override
   void initState() {
     widget.presenter.view = this;
+    controller =
+        AnimationController(duration: const Duration(seconds: 2), vsync: this);
+    animation = Tween<double>(begin: 0, end: 2 * pi).animate(controller)
+      ..addStatusListener((status) {
+        if(status == AnimationStatus.completed) {
+          controller.forward();
+        }
+        if(status == AnimationStatus.completed) {
+          controller.reverse();
+        }
+      });
+    controller.forward();
     super.initState();
   }
 
   @override
   void dispose() {
     widget.presenter.view = null;
+    controller.dispose();
     super.dispose();
   }
 
@@ -35,15 +56,31 @@ class _LoginScreen extends State<LoginScreen> implements LoginView {
         title: Text('Login Screen'),
       ),
       body: Form(
-        key: _formKey,
-        child: Column(
-          children: <Widget>[
-            emailField(),
-            passwordField(),
-            btnLogin(),
-          ],
-        ),
-      ),
+          key: _formKey,
+          child: Container(
+            child: Column(
+              children: <Widget>[
+                Flexible(
+                  child: Container(
+                    child: Column(
+                      children: <Widget>[
+                        emailField(),
+                        passwordField(),
+                        btnLogin(),
+                      ],
+                    ),
+                  ),
+                  flex: 0,
+                ),
+                Flexible(
+                  child: Container(
+                    child: image(),
+                  ),
+                  flex: 1,
+                ),
+              ],
+            ),
+          )),
     );
   }
 
@@ -120,6 +157,17 @@ class _LoginScreen extends State<LoginScreen> implements LoginView {
       child: Text('Login'),
       color: Theme.of(context).primaryColor,
       textColor: Colors.white,
+    );
+  }
+
+  Widget image() {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      transform: Matrix4.rotationY(animation.value),
+      width: double.infinity,
+      height: double.infinity,
+      child: Icon(Icons.attach_money),
+      alignment: Alignment.center,
     );
   }
 }
