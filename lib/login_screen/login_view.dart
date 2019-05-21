@@ -1,11 +1,9 @@
-import 'dart:math';
-
 import 'package:currency_converter/login_screen/login_model.dart';
 import 'package:currency_converter/login_screen/login_presenter.dart';
 import 'package:flutter/material.dart';
 import 'package:currency_converter/currency_screen/CurrencyPage.dart';
-import 'package:flutter/animation.dart';
 
+// https://stackoverflow.com/questions/53745546/how-to-rotate-an-image-using-flutter-animationcontroller-and-transform
 class LoginScreen extends StatefulWidget {
   final presenter = LoginPresenter(LoginModel());
 
@@ -20,31 +18,32 @@ class _LoginScreen extends State<LoginScreen>
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  Animation<double> animation;
-  AnimationController controller;
+  Animation<double> _animation;
+  AnimationController _controller;
 
   @override
   void initState() {
     widget.presenter.view = this;
-    controller =
-        AnimationController(duration: const Duration(seconds: 2), vsync: this);
-    animation = Tween<double>(begin: 0, end: 2 * pi).animate(controller)
+
+    _controller = AnimationController(
+      duration: const Duration(seconds: 5),
+      vsync: this,
+    );
+    _animation = Tween(begin: 0.0, end: 1.0).animate(_controller)
       ..addStatusListener((status) {
-        if(status == AnimationStatus.completed) {
-          controller.forward();
-        }
-        if(status == AnimationStatus.completed) {
-          controller.reverse();
+        if (status == AnimationStatus.completed) {
+          _controller.repeat();
         }
       });
-    controller.forward();
+    _controller.forward();
     super.initState();
   }
 
   @override
   void dispose() {
     widget.presenter.view = null;
-    controller.dispose();
+    _animation = null;
+    _controller.dispose();
     super.dispose();
   }
 
@@ -161,13 +160,9 @@ class _LoginScreen extends State<LoginScreen>
   }
 
   Widget image() {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      transform: Matrix4.rotationY(animation.value),
-      width: double.infinity,
-      height: double.infinity,
+    return RotationTransition(
+      turns: _animation,
       child: Icon(Icons.attach_money),
-      alignment: Alignment.center,
     );
   }
 }
