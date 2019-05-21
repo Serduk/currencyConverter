@@ -66,7 +66,6 @@ class _CurrencyPage extends State<CurrenciesPage> {
             ),
           ),
         ),
-//        bottomNavigationBar: inputForm(),
         floatingActionButton: FloatingActionButton(
           onPressed: _buildFuture,
           child: const Icon(Icons.refresh),

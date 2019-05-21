@@ -3,6 +3,7 @@ import 'package:currency_converter/login_screen/login_presenter.dart';
 import 'package:flutter/material.dart';
 import 'package:currency_converter/currency_screen/CurrencyPage.dart';
 
+// https://stackoverflow.com/questions/53745546/how-to-rotate-an-image-using-flutter-animationcontroller-and-transform
 class LoginScreen extends StatefulWidget {
   final presenter = LoginPresenter(LoginModel());
 
@@ -10,20 +11,39 @@ class LoginScreen extends StatefulWidget {
   _LoginScreen createState() => _LoginScreen();
 }
 
-class _LoginScreen extends State<LoginScreen> implements LoginView {
+class _LoginScreen extends State<LoginScreen>
+    with SingleTickerProviderStateMixin
+    implements LoginView {
   bool _obscurePassword = true;
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  Animation<double> _animation;
+  AnimationController _controller;
+
   @override
   void initState() {
     widget.presenter.view = this;
+
+    _controller = AnimationController(
+      duration: const Duration(seconds: 5),
+      vsync: this,
+    );
+    _animation = Tween(begin: 0.0, end: 1.0).animate(_controller)
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          _controller.repeat();
+        }
+      });
+    _controller.forward();
     super.initState();
   }
 
   @override
   void dispose() {
     widget.presenter.view = null;
+    _animation = null;
+    _controller.dispose();
     super.dispose();
   }
 
@@ -35,15 +55,31 @@ class _LoginScreen extends State<LoginScreen> implements LoginView {
         title: Text('Login Screen'),
       ),
       body: Form(
-        key: _formKey,
-        child: Column(
-          children: <Widget>[
-            emailField(),
-            passwordField(),
-            btnLogin(),
-          ],
-        ),
-      ),
+          key: _formKey,
+          child: Container(
+            child: Column(
+              children: <Widget>[
+                Flexible(
+                  child: Container(
+                    child: Column(
+                      children: <Widget>[
+                        emailField(),
+                        passwordField(),
+                        btnLogin(),
+                      ],
+                    ),
+                  ),
+                  flex: 0,
+                ),
+                Flexible(
+                  child: Container(
+                    child: image(),
+                  ),
+                  flex: 1,
+                ),
+              ],
+            ),
+          )),
     );
   }
 
@@ -120,6 +156,13 @@ class _LoginScreen extends State<LoginScreen> implements LoginView {
       child: Text('Login'),
       color: Theme.of(context).primaryColor,
       textColor: Colors.white,
+    );
+  }
+
+  Widget image() {
+    return RotationTransition(
+      turns: _animation,
+      child: Icon(Icons.attach_money),
     );
   }
 }
