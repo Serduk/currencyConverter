@@ -2,6 +2,7 @@ import 'package:currency_converter/login_screen/login_model.dart';
 import 'package:currency_converter/login_screen/login_presenter.dart';
 import 'package:flutter/material.dart';
 import 'package:currency_converter/currency_screen/CurrencyPage.dart';
+import 'package:currency_converter/strings.dart' as str;
 
 // https://stackoverflow.com/questions/53745546/how-to-rotate-an-image-using-flutter-animationcontroller-and-transform
 class LoginScreen extends StatefulWidget {
@@ -103,7 +104,7 @@ class _LoginScreen extends State<LoginScreen>
   @override
   void showLoginError() {
     _scaffoldKey.currentState.showSnackBar(
-        SnackBar(content: Text('Oops. Something went wrong :-(')));
+        SnackBar(content: Text(str.somethingWrong)));
   }
 
   @override

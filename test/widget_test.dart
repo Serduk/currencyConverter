@@ -1,30 +1,46 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility that Flutter provides. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
+import 'package:currency_converter/login_screen/login_view.dart';
+import 'package:currency_converter/strings.dart' as str;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:currency_converter/main.dart';
-
+// https://www.youtube.com/watch?v=omzDdNbMYGM
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+  testWidgets('check errors after login', (tester) async {
+    await tester.pumpWidget(MaterialApp(home: LoginScreen(),));
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    var etEmail = find.byIcon(Icons.email);
+    var etPassword = find.byIcon(Icons.account_box);
+    var btnLogin = find.byType(RaisedButton);
+    var tvErrorMsg = find.text(str.somethingWrong);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+    expect(tvErrorMsg, findsNothing);
+    expect(etEmail, findsOneWidget);
+    expect(etPassword, findsOneWidget);
+    expect(btnLogin, findsOneWidget);
+
+    await tester.tap(btnLogin);
     await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(tvErrorMsg, findsOneWidget);
   });
+
+//  testWidgets('successful login', (tester) async {
+//    await tester.pumpWidget(MaterialApp(home: LoginScreen(),));
+//
+//    var etEmail = find.byIcon(Icons.email);
+//    var etPassword = find.byIcon(Icons.account_box);
+//    var btnLogin = find.byType(RaisedButton);
+//    var tvErrorMsg = find.text(str.somethingWrong);
+//
+//    await tester.enterText(etEmail, 'serhii');
+//    await tester.pump();
+//    await tester.enterText(etPassword, 'asdfasdfasfasf');
+//    await tester.pump();
+//    await tester.tap(btnLogin);
+//    await tester.pump();
+//
+//    expect(tvErrorMsg, findsNothing);
+//    expect(etEmail, findsNothing);
+//    expect(etPassword, findsNothing);
+//    expect(btnLogin, findsNothing);
+//  });
 }
