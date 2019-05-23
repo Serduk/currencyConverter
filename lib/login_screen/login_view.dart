@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:currency_converter/currency_screen/CurrencyPage.dart';
 
 // https://stackoverflow.com/questions/53745546/how-to-rotate-an-image-using-flutter-animationcontroller-and-transform
+// TODO: Rotate 360 degree: https://api.flutter.dev/flutter/widgets/Transform-class.html
 class LoginScreen extends StatefulWidget {
   final presenter = LoginPresenter(LoginModel());
 

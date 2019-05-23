@@ -10,6 +10,7 @@ import 'package:currency_converter/entity/Currency.dart';
 import 'package:currency_converter/strings.dart' as base;
 
 /// Icons example: https://pub.dartlang.org/packages/currency_icons#-example-tab-
+/// TODO: Use hero for open any data: https://api.flutter.dev/flutter/widgets/Hero-class.html
 class CurrenciesPage extends StatefulWidget {
   final presenter = CurrencyPresenter(CurrencyModel());
 
