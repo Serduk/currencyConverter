@@ -2,13 +2,12 @@ import 'actions.dart';
 import 'state.dart';
 
 AppState appState(AppState appState, action) => AppState(
-  login: _login(appState.login, appState.password, action),
-);
+      isLogged: _isLogged(appState.isLogged, action),
+    );
 
-String _login(String log, String pass, action) {
-  if(action is PerformLogin) {
-    return action.value;
+bool _isLogged(bool old, action) {
+  if (action is LoginSuccess) {
+    return true;
   }
-
-  return 'Oops';
+  return old;
 }

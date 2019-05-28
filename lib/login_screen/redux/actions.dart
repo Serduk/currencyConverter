@@ -1,13 +1,9 @@
-class Login {
-  const Login();
-}
-
-class Logout {
-  const Logout();
-}
-
 class PerformLogin {
-  const PerformLogin(this.value);
+  const PerformLogin(this.email, this.pass, this.callback);
 
-  final String value;
+  final String email;
+  final String pass;
+  final Function callback;
 }
+
+class LoginSuccess {}

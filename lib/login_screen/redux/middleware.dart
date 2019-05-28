@@ -5,21 +5,22 @@ import 'actions.dart';
 import 'state.dart';
 
 class LoginMiddleware implements MiddlewareClass<AppState> {
-  LoginMiddleware(this.model);
+  LoginMiddleware(
+//      this.model
+      );
 
-  final LoginModel model;
+  //final LoginModel model;
 
   @override
   void call(Store<AppState> store, action, NextDispatcher next) {
-    if(action is Login) {
-//      model.login.then((message) => store.dispatch(PerformLogin(message)));
-    print('Perform Login');
+    if(action is PerformLogin) {
+//      FAKE LOGIN
+    // post login request
+     // myservice.post(action.email, action.pass)
+      // get successful response
+      action.callback();
+    store.dispatch(LoginSuccess());
     }
-
-    if(action is Logout) {
-
-    }
-
     next(action);
   }
 }
