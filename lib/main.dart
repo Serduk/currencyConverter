@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: ReduxPage(store: store),
+      home: RedLoginPage(store: store),
       theme: ThemeData(primarySwatch: Colors.blueGrey, canvasColor: Colors.white70),
     );
   }

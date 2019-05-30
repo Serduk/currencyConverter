@@ -4,6 +4,7 @@ import '../login_model.dart';
 import 'actions.dart';
 import 'state.dart';
 
+//work with async data
 class LoginMiddleware implements MiddlewareClass<AppState> {
   LoginMiddleware(
 //      this.model

@@ -1,3 +1,5 @@
+
+// Actions type
 class PerformLogin {
   const PerformLogin(this.email, this.pass, this.callback);
 
