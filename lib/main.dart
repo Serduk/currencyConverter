@@ -1,5 +1,5 @@
 import 'package:currency_converter/login_screen/redux/reducers.dart';
-import 'package:currency_converter/login_screen/redux/redux_page.dart';
+import 'package:currency_converter/login_screen/redux/login_page.dart';
 import 'package:currency_converter/login_screen/redux/state.dart';
 import 'package:flutter/material.dart';
 //import 'package:currency_converter/login_screen/LoginScreen.dart';

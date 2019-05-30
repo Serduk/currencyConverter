@@ -1,3 +1,5 @@
+import 'package:currency_converter/entity/Currency.dart';
+
 import 'actions.dart';
 import 'state.dart';
 
@@ -9,6 +11,16 @@ AppState appState(AppState appState, action) => AppState(
 bool _isLogged(bool old, action) {
   if (action is LoginSuccess) {
     return true;
+  }
+  return old;
+}
+
+bool _isDateFetched(bool old, action) {
+  return old;
+}
+
+List<CurrencyEntity> _getCurrencies(List<CurrencyEntity> old, action) {
+  if (action is FetchData) {
   }
   return old;
 }
