@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:currency_converter/entity/Currency.dart';
 
-import 'package:currency_converter/strings.dart' as base;
+import 'package:currency_converter/utils/strings.dart' as base;
+import 'package:currency_converter/utils/flag_converter.dart' as flags;
 
 /// Icons example: https://pub.dartlang.org/packages/currency_icons#-example-tab-
 class CurrenciesPage extends StatefulWidget {
@@ -153,7 +154,9 @@ class CurrencyListTile extends StatelessWidget {
               showDialog(
                 context: context,
                 builder: (_) => AlertDialog(
-                      content: Image.asset('icons/currency/$currency.png',
+//                      content: Image.asset('icons/currency/$currency.png',
+//                          package: 'currency_icons'),
+                  content: Image.asset('icons/currency/' + flags.FlagConverter.getFlagByCurrency(country) + '.png',
                           package: 'currency_icons'),
                     ),
               );

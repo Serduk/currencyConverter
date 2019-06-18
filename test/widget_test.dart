@@ -1,5 +1,5 @@
 import 'package:currency_converter/login_screen/login_view.dart';
-import 'package:currency_converter/strings.dart' as str;
+import 'package:currency_converter/utils/strings.dart' as str;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

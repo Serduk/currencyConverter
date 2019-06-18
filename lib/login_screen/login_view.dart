@@ -2,7 +2,7 @@ import 'package:currency_converter/login_screen/login_model.dart';
 import 'package:currency_converter/login_screen/login_presenter.dart';
 import 'package:flutter/material.dart';
 import 'package:currency_converter/currency_screen/CurrencyPage.dart';
-import 'package:currency_converter/strings.dart' as str;
+import 'package:currency_converter/utils/strings.dart' as str;
 
 // https://stackoverflow.com/questions/53745546/how-to-rotate-an-image-using-flutter-animationcontroller-and-transform
 class LoginScreen extends StatefulWidget {
