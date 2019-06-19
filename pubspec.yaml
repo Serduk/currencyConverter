@@ -17,11 +17,11 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
-  faker: ^1.0.1
-  http: ^0.12.0+2
-  currency_icons: ^0.0.2
   flutter:
     sdk: flutter
+  currency_icons: ^0.0.2
+  http: ^0.12.0+2
+  faker: ^1.0.1
   mockito: ^4.0.0
   redux: ^3.0.0
   flutter_redux: ^0.5.3
@@ -31,6 +31,7 @@ dependencies:
   cupertino_icons: ^0.1.2
 
 dev_dependencies:
+  currency_icons: ^0.0.2
   flutter_test:
     sdk: flutter
   test: ^1.6.1

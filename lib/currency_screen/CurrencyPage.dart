@@ -160,13 +160,15 @@ class CurrencyListTile extends StatelessWidget {
                                   .toLowerCase() +
                               '.png',
                           package: 'currency_icons'),
+                      title:
+                          Text(flags.FlagConverter.getFlagByCurrency(country)),
                     ),
               );
             },
             child: CircleAvatar(
-              backgroundImage: NetworkImage(
-                'https://restcountries.eu/data/$country.svg',
-              ),
+              backgroundImage: AssetImage(
+                  'icons/currency/' + country.toLowerCase() + '.png',
+                  package: 'currency_icons'),
             ),
           ),
           title: Text('$country $currency'),
