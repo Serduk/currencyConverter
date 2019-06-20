@@ -154,12 +154,8 @@ class CurrencyListTile extends StatelessWidget {
               showDialog(
                 context: context,
                 builder: (_) => AlertDialog(
-                      content: Image.asset(
-                          'icons/currency/' +
-                              flags.FlagConverter.getFlagByCurrency(country)
-                                  .toLowerCase() +
-                              '.png',
-                          package: 'currency_icons'),
+                      content: Text('$currency $country ${base.perOneEuro} \n'
+                          '${base.total}: ${(currency * exchange).toStringAsFixed(2)}'),
                       title:
                           Text(flags.FlagConverter.getFlagByCurrency(country)),
                     ),
