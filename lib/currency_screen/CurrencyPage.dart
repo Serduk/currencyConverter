@@ -171,10 +171,11 @@ class CurrencyListTile extends StatelessWidget {
                   package: 'currency_icons'),
             ),
           ),
-          title: Text('$currency $country'),
+          title: Text('$currency $country ${base.perOneEuro}'),
           subtitle: Text(
               'Country: ${flags.FlagConverter.getFlagByCurrency(country)}'),
-          trailing: Text('${(currency * exchange).toStringAsFixed(2)}'),
+          trailing: Text(
+              '${base.total}: ${(currency * exchange).toStringAsFixed(2)}'),
         ),
       );
 }
