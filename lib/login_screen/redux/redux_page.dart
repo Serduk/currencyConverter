@@ -28,7 +28,7 @@ class RedLoginPage extends StatelessWidget {
             StoreConnector<AppState, bool>(
               converter: (store) => store.state.isLogged,
               builder: (_, isLogged) => Text(
-                    '$isLogged',
+                    'Please, Login',
                   ),
             ),
             _LoginForm(),
